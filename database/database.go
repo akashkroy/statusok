@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/akashkroy/statusok/notify"
+	"github.com/sirupsen/logrus"
 )
 
 var (
