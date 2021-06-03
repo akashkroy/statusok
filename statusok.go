@@ -10,9 +10,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sanathp/statusok/database"
-	"github.com/sanathp/statusok/notify"
-	"github.com/sanathp/statusok/requests"
+	"github.com/akashkroy/statusok/database"
+	"github.com/akashkroy/statusok/notify"
+	"github.com/akashkroy/statusok/requests"
 	"github.com/urfave/cli"
 )
 
