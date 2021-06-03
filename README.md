@@ -1,3 +1,9 @@
+## Created this fork to update codebase and probably add new features. 
+Todo:   
+* Update the dockerfile 
+* Update the database to Influxdb 2.0 
+* Update the code to read from the config file periodically (Probably)
+
 # StatusOK
 
 Monitor your Website and APIs from your computer.Get notified through Slack or E-mail when your server is down or response time is more than expected.
