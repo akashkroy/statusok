@@ -2,7 +2,6 @@ package notify
 
 import (
 	"fmt"
-	"os"
 	"reflect"
 	"regexp"
 	"strings"
@@ -106,29 +105,7 @@ func SendErrorNotification(errorNotification ErrorNotification) {
 //Send Test notification to all registered clients .To make sure everything is working
 func SendTestNotification() {
 
-	println("Sending Test notifications to the registered clients")
-
-	for _, value := range notificationsList {
-		err := value.SendResponseTimeNotification(ResponseTimeNotification{"http://test.com", "GET", 700, 800})
-
-		if err != nil {
-			println("Failed to Send Response Time notification to ", value.GetClientName(), " Please check the details entered in the config file")
-			println("Error Details :", err.Error())
-			os.Exit(3)
-		} else {
-			println("Sent Test Response Time notification to ", value.GetClientName(), ". Make sure you received it")
-		}
-
-		err1 := value.SendErrorNotification(ErrorNotification{"http://test.com", "GET", "This is test notification", "Test notification", "test"})
-
-		if err1 != nil {
-			println("Failed to Send Error notification to ", value.GetClientName(), " Please check the details entered in the config file")
-			println("Error Details :", err1.Error())
-			os.Exit(3)
-		} else {
-			println("Sent Test Error notification to ", value.GetClientName(), ". Make sure you received it")
-		}
-	}
+	println(":white_check_mark: Statusok Test Notification")
 }
 
 func validateEmail(email string) bool {
@@ -154,10 +131,8 @@ func isEmptyObject(objectString string) bool {
 //A readable message string from responseTimeNotification
 func getMessageFromResponseTimeNotification(responseTimeNotification ResponseTimeNotification) string {
 
-	message := fmt.Sprintf("Notification From StatusOk\n\nOne of your apis response time is below than expected."+
-		"\n\nPlease find the Details below"+
-		"\n\nUrl: %v \nRequestType: %v \nCurrent Average Response Time: %v ms\nExpected Response Time: %v ms\n"+
-		"\n\nThanks", responseTimeNotification.Url, responseTimeNotification.RequestType, responseTimeNotification.MeanResponseTime, responseTimeNotification.ExpectedResponsetime)
+	message := fmt.Sprintf(":warning: Increased API response time on %v %v %v ms / %v ms",
+		responseTimeNotification.Url, responseTimeNotification.RequestType, responseTimeNotification.MeanResponseTime, responseTimeNotification.ExpectedResponsetime)
 
 	return message
 }
@@ -165,10 +140,9 @@ func getMessageFromResponseTimeNotification(responseTimeNotification ResponseTim
 //A readable message string from errorNotification
 func getMessageFromErrorNotification(errorNotification ErrorNotification) string {
 
-	message := fmt.Sprintf("Notification From StatusOk\n\nWe are getting error when we try to send request to one of your apis"+
-		"\n\nPlease find the Details below"+
-		"\n\nUrl: %v \nRequestType: %v \nError Message: %v \nResponse Body: %v\nOther Info:%v\n"+
-		"\n\nThanks", errorNotification.Url, errorNotification.RequestType, errorNotification.Error, errorNotification.ResponseBody, errorNotification.OtherInfo)
+	message := fmt.Sprintf(":red_circle: Error sending requests to URL: %v %v\n"+
+		"Error Message: %v Response: %v\nOther Info:%v",
+		errorNotification.Url, errorNotification.RequestType, errorNotification.Error, errorNotification.ResponseBody, errorNotification.OtherInfo)
 
 	return message
 }
