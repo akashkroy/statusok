@@ -2,6 +2,7 @@ package notify
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"regexp"
 	"strings"
@@ -105,7 +106,29 @@ func SendErrorNotification(errorNotification ErrorNotification) {
 //Send Test notification to all registered clients .To make sure everything is working
 func SendTestNotification() {
 
-	println(":white_check_mark: Statusok Test Notification")
+	println("Sending Test notifications to the registered clients")
+
+	for _, value := range notificationsList {
+		err := value.SendResponseTimeNotification(ResponseTimeNotification{"http://test.com", "GET", 700, 800})
+
+		if err != nil {
+			println("Failed to Send Response Time notification to ", value.GetClientName(), " Please check the details entered in the config file")
+			println("Error Details :", err.Error())
+			os.Exit(3)
+		} else {
+			println("Sent Test Response Time notification to ", value.GetClientName(), ". Make sure you received it")
+		}
+
+		err1 := value.SendErrorNotification(ErrorNotification{"http://test.com", "GET", "This is test notification", "Test notification", "test"})
+
+		if err1 != nil {
+			println("Failed to Send Error notification to ", value.GetClientName(), " Please check the details entered in the config file")
+			println("Error Details :", err1.Error())
+			os.Exit(3)
+		} else {
+			println("Sent Test Error notification to ", value.GetClientName(), ". Make sure you received it")
+		}
+	}
 }
 
 func validateEmail(email string) bool {
