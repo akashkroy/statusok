@@ -164,7 +164,7 @@ func getMessageFromResponseTimeNotification(responseTimeNotification ResponseTim
 func getMessageFromErrorNotification(errorNotification ErrorNotification) string {
 
 	message := fmt.Sprintf(":red_circle: Error sending requests to URL: %v %v\n"+
-		":bangbang: Error Message: %v Response: %v\n:grey_exclamation: Other Info:%v",
+		":exclamation: Error Message: %v Response: %v\n:grey_exclamation: Other Info:%v",
 		errorNotification.Url, errorNotification.RequestType, errorNotification.Error, errorNotification.ResponseBody, errorNotification.OtherInfo)
 
 	return message
